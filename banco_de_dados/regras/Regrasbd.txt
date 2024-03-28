@@ -1,0 +1,7 @@
+REGRAS DO BANCO DE DADOS - DEVEM SER SEGUIDAS PARA GARANTIR O FUNCIONAMENTO
+
+1 - A ordem de geração do banco de dados deve ser a especificada no arquivo banco.sql na pasta modelo
+2 - O banco de dados mais recente estará na pasta database no formato SQL, deve ser importado, exportado e garantido o commit caso exportado.
+3 - Observar com cuidado a parte do CRUD, sempre usar WHERE nas clausulas quando a consulta for DELETE
+4 - Manter o banco de dados em conformidade com a UML
+5 - Na pasta backup terá a ultima versão anterior do banco de dados, caso haja algum problema quanto a primeira
