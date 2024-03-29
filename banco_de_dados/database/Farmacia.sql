@@ -1,118 +1,347 @@
--- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost    Database: farmacia
--- ------------------------------------------------------
--- Server version	5.6.26-log
+-- Host: 127.0.0.1
+-- Tempo de geração: 29/03/2024 às 17:58
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Dumping data for table `cidade`
+-- Banco de dados: `farmacia`
 --
 
-LOCK TABLES `cidade` WRITE;
-/*!40000 ALTER TABLE `cidade` DISABLE KEYS */;
-INSERT INTO `cidade` VALUES (1,'SCRP',1);
-/*!40000 ALTER TABLE `cidade` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `comprovante`
+-- Estrutura para tabela `cidade`
 --
 
-LOCK TABLES `comprovante` WRITE;
-/*!40000 ALTER TABLE `comprovante` DISABLE KEYS */;
-/*!40000 ALTER TABLE `comprovante` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `cidade` (
+  `ID_Cidade` int(11) NOT NULL,
+  `NOME` varchar(50) NOT NULL,
+  `ID_Estado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `estado`
+-- Despejando dados para a tabela `cidade`
 --
 
-LOCK TABLES `estado` WRITE;
-/*!40000 ALTER TABLE `estado` DISABLE KEYS */;
-INSERT INTO `estado` VALUES (1,'São Paulo','SP');
-/*!40000 ALTER TABLE `estado` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `cidade` (`ID_Cidade`, `NOME`, `ID_Estado`) VALUES
+(1, 'Santa Cruz do Rio Pardo', 1);
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `funcionario`
+-- Estrutura para tabela `comprovante`
 --
 
-LOCK TABLES `funcionario` WRITE;
-/*!40000 ALTER TABLE `funcionario` DISABLE KEYS */;
-INSERT INTO `funcionario` VALUES (1,1,'2024-03-28');
-/*!40000 ALTER TABLE `funcionario` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `comprovante` (
+  `ID_Nota` int(11) NOT NULL,
+  `ID_Venda` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `item_venda`
+-- Estrutura para tabela `estado`
 --
 
-LOCK TABLES `item_venda` WRITE;
-/*!40000 ALTER TABLE `item_venda` DISABLE KEYS */;
-/*!40000 ALTER TABLE `item_venda` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `estado` (
+  `ID_Estado` int(11) NOT NULL,
+  `NOME` varchar(50) NOT NULL,
+  `SIGLA` varchar(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `pessoa`
+-- Despejando dados para a tabela `estado`
 --
 
-LOCK TABLES `pessoa` WRITE;
-/*!40000 ALTER TABLE `pessoa` DISABLE KEYS */;
-INSERT INTO `pessoa` VALUES (1,'000.000.000-00','Teste',1,'Rua Exemplo',1,'Bairro Exemplo','2000-03-16');
-/*!40000 ALTER TABLE `pessoa` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `estado` (`ID_Estado`, `NOME`, `SIGLA`) VALUES
+(1, 'São Paulo', 'SP');
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `produto`
+-- Estrutura para tabela `funcionario`
 --
 
-LOCK TABLES `produto` WRITE;
-/*!40000 ALTER TABLE `produto` DISABLE KEYS */;
-INSERT INTO `produto` VALUES (1,'Dicoflenaco',10.99,'2024-03-02','2026-03-02',0.5,NULL,10);
-/*!40000 ALTER TABLE `produto` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `funcionario` (
+  `ID_Funcionario` int(11) NOT NULL,
+  `ID_Pessoa` int(11) NOT NULL,
+  `DATA_INICIO_EMPREGO` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `usuario`
+-- Estrutura para tabela `item_venda`
 --
 
-LOCK TABLES `usuario` WRITE;
-/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,1,'Teste1','teste@example.com','abc123');
-/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `item_venda` (
+  `ID_ItemVenda` int(11) NOT NULL,
+  `ID_Usuario` int(11) NOT NULL,
+  `ID_Produto` int(11) NOT NULL,
+  `ID_Funcionario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `venda`
+-- Estrutura para tabela `pessoa`
 --
 
-LOCK TABLES `venda` WRITE;
-/*!40000 ALTER TABLE `venda` DISABLE KEYS */;
-/*!40000 ALTER TABLE `venda` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `pessoa` (
+  `ID_Pessoa` int(11) NOT NULL,
+  `CPF` varchar(14) NOT NULL,
+  `NOME` varchar(50) NOT NULL,
+  `ID_Cidade` int(11) NOT NULL,
+  `RUA` varchar(65) NOT NULL,
+  `NUMERO` int(11) NOT NULL,
+  `BAIRRO` varchar(60) NOT NULL,
+  `DATA_DE_NASCIMENTO` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping routines for database 'farmacia'
+-- Despejando dados para a tabela `pessoa`
 --
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+INSERT INTO `pessoa` (`ID_Pessoa`, `CPF`, `NOME`, `ID_Cidade`, `RUA`, `NUMERO`, `BAIRRO`, `DATA_DE_NASCIMENTO`) VALUES
+(1, '000.000.000-00', 'admin1', 1, 'Rua Exemplo', 0, 'Bairro Exemplo', '2000-02-01');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `produto`
+--
+
+CREATE TABLE `produto` (
+  `ID_Produto` int(11) NOT NULL,
+  `NOME_PRODUTO` varchar(50) NOT NULL,
+  `PRECO` float NOT NULL,
+  `DATA_FAB` date NOT NULL,
+  `DATA_VAL` date NOT NULL,
+  `PESO` float DEFAULT NULL,
+  `IMAGEM_PROD` longblob DEFAULT NULL,
+  `QUANTIDADE` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `usuario`
+--
+
+CREATE TABLE `usuario` (
+  `ID_Usuario` int(11) NOT NULL,
+  `ID_Pessoa` int(11) NOT NULL,
+  `NOME_DE_USUARIO` varchar(50) NOT NULL,
+  `EMAIL` varchar(60) NOT NULL,
+  `SENHA` varchar(64) NOT NULL,
+  `NIVEL_USUARIO` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `usuario`
+--
+
+INSERT INTO `usuario` (`ID_Usuario`, `ID_Pessoa`, `NOME_DE_USUARIO`, `EMAIL`, `SENHA`, `NIVEL_USUARIO`) VALUES
+(1, 1, 'admin1', 'admin1@example.com', 'admin1', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `venda`
+--
+
+CREATE TABLE `venda` (
+  `ID_Venda` int(11) NOT NULL,
+  `ID_ItemVenda` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices de tabela `cidade`
+--
+ALTER TABLE `cidade`
+  ADD PRIMARY KEY (`ID_Cidade`),
+  ADD UNIQUE KEY `NOME` (`NOME`),
+  ADD KEY `ID_Estado` (`ID_Estado`);
+
+--
+-- Índices de tabela `comprovante`
+--
+ALTER TABLE `comprovante`
+  ADD PRIMARY KEY (`ID_Nota`),
+  ADD KEY `ID_Venda` (`ID_Venda`);
+
+--
+-- Índices de tabela `estado`
+--
+ALTER TABLE `estado`
+  ADD PRIMARY KEY (`ID_Estado`),
+  ADD UNIQUE KEY `NOME` (`NOME`),
+  ADD UNIQUE KEY `SIGLA` (`SIGLA`);
+
+--
+-- Índices de tabela `funcionario`
+--
+ALTER TABLE `funcionario`
+  ADD PRIMARY KEY (`ID_Funcionario`),
+  ADD KEY `ID_Pessoa` (`ID_Pessoa`);
+
+--
+-- Índices de tabela `item_venda`
+--
+ALTER TABLE `item_venda`
+  ADD PRIMARY KEY (`ID_ItemVenda`),
+  ADD KEY `ID_Usuario` (`ID_Usuario`),
+  ADD KEY `ID_Produto` (`ID_Produto`),
+  ADD KEY `ID_Funcionario` (`ID_Funcionario`);
+
+--
+-- Índices de tabela `pessoa`
+--
+ALTER TABLE `pessoa`
+  ADD PRIMARY KEY (`ID_Pessoa`),
+  ADD UNIQUE KEY `CPF` (`CPF`),
+  ADD KEY `ID_Cidade` (`ID_Cidade`);
+
+--
+-- Índices de tabela `produto`
+--
+ALTER TABLE `produto`
+  ADD PRIMARY KEY (`ID_Produto`);
+
+--
+-- Índices de tabela `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`ID_Usuario`),
+  ADD UNIQUE KEY `NOME_DE_USUARIO` (`NOME_DE_USUARIO`),
+  ADD KEY `ID_Pessoa` (`ID_Pessoa`);
+
+--
+-- Índices de tabela `venda`
+--
+ALTER TABLE `venda`
+  ADD PRIMARY KEY (`ID_Venda`),
+  ADD KEY `ID_ItemVenda` (`ID_ItemVenda`);
+
+--
+-- AUTO_INCREMENT para tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `cidade`
+--
+ALTER TABLE `cidade`
+  MODIFY `ID_Cidade` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `comprovante`
+--
+ALTER TABLE `comprovante`
+  MODIFY `ID_Nota` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `estado`
+--
+ALTER TABLE `estado`
+  MODIFY `ID_Estado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `funcionario`
+--
+ALTER TABLE `funcionario`
+  MODIFY `ID_Funcionario` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `item_venda`
+--
+ALTER TABLE `item_venda`
+  MODIFY `ID_ItemVenda` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `pessoa`
+--
+ALTER TABLE `pessoa`
+  MODIFY `ID_Pessoa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `ID_Usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `venda`
+--
+ALTER TABLE `venda`
+  MODIFY `ID_Venda` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restrições para tabelas despejadas
+--
+
+--
+-- Restrições para tabelas `cidade`
+--
+ALTER TABLE `cidade`
+  ADD CONSTRAINT `cidade_ibfk_1` FOREIGN KEY (`ID_Estado`) REFERENCES `estado` (`ID_Estado`);
+
+--
+-- Restrições para tabelas `comprovante`
+--
+ALTER TABLE `comprovante`
+  ADD CONSTRAINT `comprovante_ibfk_1` FOREIGN KEY (`ID_Venda`) REFERENCES `venda` (`ID_Venda`);
+
+--
+-- Restrições para tabelas `funcionario`
+--
+ALTER TABLE `funcionario`
+  ADD CONSTRAINT `funcionario_ibfk_1` FOREIGN KEY (`ID_Pessoa`) REFERENCES `pessoa` (`ID_Pessoa`);
+
+--
+-- Restrições para tabelas `item_venda`
+--
+ALTER TABLE `item_venda`
+  ADD CONSTRAINT `item_venda_ibfk_1` FOREIGN KEY (`ID_Usuario`) REFERENCES `usuario` (`ID_Usuario`),
+  ADD CONSTRAINT `item_venda_ibfk_2` FOREIGN KEY (`ID_Produto`) REFERENCES `produto` (`ID_Produto`),
+  ADD CONSTRAINT `item_venda_ibfk_3` FOREIGN KEY (`ID_Funcionario`) REFERENCES `funcionario` (`ID_Funcionario`);
+
+--
+-- Restrições para tabelas `pessoa`
+--
+ALTER TABLE `pessoa`
+  ADD CONSTRAINT `pessoa_ibfk_1` FOREIGN KEY (`ID_Cidade`) REFERENCES `cidade` (`ID_Cidade`);
+
+--
+-- Restrições para tabelas `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`ID_Pessoa`) REFERENCES `pessoa` (`ID_Pessoa`);
+
+--
+-- Restrições para tabelas `venda`
+--
+ALTER TABLE `venda`
+  ADD CONSTRAINT `venda_ibfk_1` FOREIGN KEY (`ID_ItemVenda`) REFERENCES `item_venda` (`ID_ItemVenda`);
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2024-03-28 12:17:23
